@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { PRODUCT_CREATE_RESET } from "../../Redux/Constants/ProductConstants";
-import { createProduct } from "./../../Redux/Actions/ProductActions";
 import Toast from "../LoadingError/Toast";
-import Message from "../LoadingError/Error";
-import Loading from "../LoadingError/Loading";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -20,7 +14,7 @@ const AddProductMain = () => {
     <>
       <Toast />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
-        <form onSubmit={submitHandler}>
+        <form>
           <div className="content-header">
             <Link to="/products" className="btn btn-danger text-white">
               Go to products

@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { listUser } from "../../Redux/Actions/userActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 
 const UserComponent = () => {
-  const dispatch = useDispatch();
 
   return (
     <section className="content-main">

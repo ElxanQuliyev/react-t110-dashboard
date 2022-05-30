@@ -4,7 +4,7 @@ const OrderDetailInfo = (props) => {
   const { order } = props;
   return (
     <div className="row mb-5 order-info-wrap">
-      <div className="col-md-6 col-lg-4">
+      {/* <div className="col-md-6 col-lg-4">
         <article className="icontext align-items-start">
           <span className="icon icon-sm rounded-circle alert-success">
             <i className="text-success fas fa-user"></i>
@@ -47,7 +47,7 @@ const OrderDetailInfo = (props) => {
             </p>
           </div>
         </article>
-      </div>
+      </div> */}
     </div>
   );
 };

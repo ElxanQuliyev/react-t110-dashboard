@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Product from "./Product";
-import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../../Redux/Actions/ProductActions";
-import Loading from "../LoadingError/Loading";
-import Message from "../LoadingError/Error";
 
 const MainProducts = () => {
   return (

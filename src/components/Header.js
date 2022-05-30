@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import $ from "jquery";
-import { useDispatch } from "react-redux";
-import { logout } from "../Redux/Actions/userActions";
 
 const Header = () => {
-  const dispatch = useDispatch();
   useEffect(() => {
     $("[data-trigger]").on("click", function (e) {
       e.preventDefault();
@@ -25,9 +22,9 @@ const Header = () => {
     });
   }, []);
 
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
+  // const logoutHandler = () => {
+  //   dispatch(logout());
+  // };
 
   return (
     <header className="main-header navbar">
@@ -91,7 +88,7 @@ const Header = () => {
                 Settings
               </Link>
               <Link
-                onClick={logoutHandler}
+                // onClick={logoutHandler}
                 className="dropdown-item text-danger"
                 to="#"
               >
