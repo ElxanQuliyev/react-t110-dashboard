@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/LoadingError/Loading";
 import Toast from "../components/LoadingError/Toast";
+import { loginAction } from "../Redux/Actions/UserActions";
 import Message from "./../components/LoadingError/Error";
 
 const Login = ({ history }) => {
   window.scrollTo(0, 0);
+  const {error,userInfo,loading}=useSelector(state=>state.loginUser)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push("/");
-  //   }
-  // }, [userInfo, history]);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/");
+    }
+  }, [userInfo, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch(login(email, password));
+    dispatch(loginAction(email, password));
   };
   return (
     <>
@@ -25,8 +30,8 @@ const Login = ({ history }) => {
         style={{ maxWidth: "380px", marginTop: "100px" }}
       >
         <div className="card-body">
-          {/* {error && <Message variant="alert-danger">{error}</Message>}
-          {loading && <Loading />} */}
+          {error && <Message variant="alert-danger">{error}</Message>}
+          {loading && <Loading />} 
           <h4 className="card-title mb-4 text-center">Sign in</h4>
           <form onSubmit={submitHandler}>
             <div className="mb-3">
