@@ -3,7 +3,8 @@ import { LoginReducers, RegisterReducers } from './Reducers/UserReducers';
 import thunk from 'redux-thunk';
 
 
-const userFromLocalStorage=localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")): null
+const userFromLocalStorage=localStorage.getItem("userInfo")?
+ JSON.parse(localStorage.getItem("userInfo")): null
 
 const reducer=combineReducers({
     loginUser:LoginReducers,

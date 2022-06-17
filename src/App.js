@@ -30,14 +30,14 @@ function App() {
     <>
       <Router>
         <Switch>
-          <PrivateRouter path="/" component={HomeScreen} exact />
-          <PrivateRouter path="/products" component={ProductScreen} />
-          <PrivateRouter path="/category" component={CategoriesScreen} />
-          <PrivateRouter path="/orders" component={OrderScreen} />
-          <PrivateRouter path="/order/:id" component={OrderDetailScreen} />
-          <PrivateRouter path="/addproduct" component={AddProduct} />
-          <PrivateRouter path="/users" component={UsersScreen} />
-          <PrivateRouter
+          <Route path="/" component={HomeScreen} exact />
+          <Route path="/products" component={ProductScreen} />
+          <Route path="/category" component={CategoriesScreen} />
+          <Route path="/orders" component={OrderScreen} />
+          <Route path="/order/:id" component={OrderDetailScreen} />
+          <Route path="/addproduct" component={AddProduct} />
+          <Route path="/users" component={UsersScreen} />
+          <Route
             path="/product/:id/edit"
             component={ProductEditScreen}
           />
