@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { listCategories } from "../../Redux/Actions/CategoryActions";
+import { listInstructors } from "../../Redux/Actions/InstructorActions";
+import Loading from "../LoadingError/Loading";
 import Toast from "../LoadingError/Toast";
 
 const ToastObjects = {
@@ -19,12 +23,25 @@ const AddProductMain = () => {
   const [trailer, setTrailer] = useState("")
   const [photoUrl, setPhotoUrl] = useState("")
   const [instructorId, setInstructorId] = useState(null)
+  const [categoryId, setCategoryId] = useState(null)
+  //Orxan Mellim sağlığınıza duaçıyız
+  const {categories} = useSelector(state=>state.categoryList)
+  const {instructors} = useSelector(state=>state.instructorList)
 
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(listCategories())
+    dispatch(listInstructors())
+  },[dispatch])
+  const submitHandler= (e)=>{
+    e.preventDefault();
+    // dispatch(addCourse(courseName))
+  }
   return (
     <>
       <Toast />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
-        <form>
+        <form onSubmit={submitHandler}>
           <div className="content-header">
             <Link to="/products" className="btn btn-danger text-white">
               Go to products
@@ -61,11 +78,29 @@ const AddProductMain = () => {
                     <label htmlFor="product_instructors" className="form-label">
                       Instructors
                     </label>
-                    <select id="product_instructors" onChange={e=>setInstructorId(e.target.value)}
-                       className="form-control">
-                      <option value={1}>-</option>
+                    <select id="product_instructors" 
+                       onChange={e=>setInstructorId(e.target.value)}
+                       className="form-control" defaultValue="-">
+                      <option disabled value="-">select Instructors...</option>
+                      {instructors?.map(instructor=>(
+                        <option key={instructor.id} 
+                          value={instructor.id}>{instructor.fullName}</option>
+                      ))}
                     </select>
-
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="product_categories" className="form-label">
+                      Categories
+                    </label>
+                    <select id="product_categories" 
+                       onChange={e=>setCategoryId(e.target.value)}
+                       className="form-control" defaultValue="-">
+                     <option option disabled value="-">select categories...</option>
+                      {categories?.map(category=>(
+                        <option key={category.categoryId} 
+                          value={category.categoryId}>{category.categoryName}</option>
+                      ))}
+                    </select>
                   </div>
                   <div className="mb-4">
                     <label htmlFor="product_trailer" className="form-label">
@@ -91,7 +126,6 @@ const AddProductMain = () => {
                       placeholder="Type here"
                       className="form-control"
                       id="product_summary"
-                      required
                       value={summary}
                       onChange={e=>setSummary(e.target.value)}
                     />
@@ -119,7 +153,6 @@ const AddProductMain = () => {
                       placeholder="Type here"
                       className="form-control"
                       id="product_discount"
-                      required
                       value={discount}
                       onChange={(e)=>setDiscount(e.target.value)}
                     />
@@ -131,7 +164,6 @@ const AddProductMain = () => {
                     <input
                       type="checkbox"
                       id="product_price"
-                      required
                       value={isFeatured}
                       onChange={(e)=>
                         {setIsFeatured(e.target.checked ? true : false)}}
@@ -143,7 +175,6 @@ const AddProductMain = () => {
                       placeholder="Type here"
                       className="form-control"
                       rows="7"
-                      required
                       value={description}
                       onChange={e=>setDescription(e.target.value)}
                     ></textarea>
@@ -154,7 +185,6 @@ const AddProductMain = () => {
                       className="form-control"
                       type="text"
                       placeholder="Enter Image URL"
-                      required
                       value={photoUrl}
                       onChange={(e)=>setPhotoUrl(e.target.value)}
                     />

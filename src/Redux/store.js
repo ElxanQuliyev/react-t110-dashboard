@@ -1,6 +1,8 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import { LoginReducers, RegisterReducers } from './Reducers/UserReducers';
 import thunk from 'redux-thunk';
+import { categoryListReducers } from './Reducers/CategoryReducers';
+import { instructorListReducers } from './Reducers/InstructorReducers';
 
 
 const userFromLocalStorage=localStorage.getItem("userInfo")?
@@ -8,7 +10,9 @@ const userFromLocalStorage=localStorage.getItem("userInfo")?
 
 const reducer=combineReducers({
     loginUser:LoginReducers,
-    registerUser:RegisterReducers
+    registerUser:RegisterReducers,
+    categoryList:categoryListReducers,
+    instructorList:instructorListReducers
 })
 
 const initialState={
