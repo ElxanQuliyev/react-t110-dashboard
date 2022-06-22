@@ -7,7 +7,6 @@ export const listInstructors=()=>async(dispatch)=>{
         dispatch({type:INSTRUCTOR_LIST_REQUEST})
         const {data} = await axios.get(`${BASE_URL}/instructor`)
         dispatch({type:INSTRUCTOR_LIST_SUCCESS,payload:data})
-            
     } catch (error) {
         dispatch({type:INSTRUCTOR_LIST_FAIL,payload:error})
     }

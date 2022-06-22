@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { listCategories } from "../../Redux/Actions/CategoryActions";
+import { courseAdd } from "../../Redux/Actions/CourseActions";
 import { listInstructors } from "../../Redux/Actions/InstructorActions";
 import Loading from "../LoadingError/Loading";
 import Toast from "../LoadingError/Toast";
@@ -27,7 +29,13 @@ const AddProductMain = () => {
   //Orxan Mellim sağlığınıza duaçıyız
   const {categories} = useSelector(state=>state.categoryList)
   const {instructors} = useSelector(state=>state.instructorList)
-
+  const {courseInfo, loading}=useSelector(state=>state.addedCourseRed)
+  const navigate=useHistory();
+  useEffect(()=>{
+    if(courseInfo && courseInfo.status===200){
+      navigate.replace("/products");
+    }
+  },[courseInfo,navigate])
   const dispatch=useDispatch();
   useEffect(()=>{
     dispatch(listCategories())
@@ -35,7 +43,20 @@ const AddProductMain = () => {
   },[dispatch])
   const submitHandler= (e)=>{
     e.preventDefault();
-    // dispatch(addCourse(courseName))
+    const newCourse={
+      name:courseName,
+      summary,
+      description,
+      price:parseFloat(price),
+      discount:parseFloat(discount),
+      isFeatured,
+      trailerUrl:trailer,
+      photoUrl,
+      categoryId:parseInt(categoryId),
+      instructorId:parseInt(instructorId),
+      reyting:0
+    }
+    dispatch(courseAdd(newCourse))
   }
   return (
     <>
@@ -59,7 +80,7 @@ const AddProductMain = () => {
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
                   {/* {error && <Message variant="alert-danger">{error}</Message>} */}
-                  {/* {loading && <Loading />} */}
+                  {loading && <Loading />}
                   <div className="mb-4">
                     <label htmlFor="product_title" className="form-label">
                       Course Name
