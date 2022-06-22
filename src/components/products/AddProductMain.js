@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { listCategories } from "../../Redux/Actions/CategoryActions";
 import { courseAdd } from "../../Redux/Actions/CourseActions";
 import { listInstructors } from "../../Redux/Actions/InstructorActions";
+import { COURSE_CLEAR } from "../../Redux/Constants/CourseConstants";
 import Loading from "../LoadingError/Loading";
 import Toast from "../LoadingError/Toast";
 
@@ -16,6 +17,7 @@ const ToastObjects = {
 };
 
 const AddProductMain = () => {
+  const dispatch=useDispatch();
   const [courseName,setCourseName]=useState("")
   const [description, setDescription] = useState("")
   const [summary, setSummary] = useState("")
@@ -34,9 +36,9 @@ const AddProductMain = () => {
   useEffect(()=>{
     if(courseInfo && courseInfo.status===200){
       navigate.replace("/products");
+      dispatch({type:COURSE_CLEAR})
     }
-  },[courseInfo,navigate])
-  const dispatch=useDispatch();
+  },[courseInfo,navigate,dispatch])
   useEffect(()=>{
     dispatch(listCategories())
     dispatch(listInstructors())

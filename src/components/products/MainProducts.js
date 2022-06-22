@@ -1,7 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { courseListAction } from "../../Redux/Actions/CourseActions";
+import Loading from "../LoadingError/Loading";
+import Message from "../LoadingError/Error";
+import Product from "../products/Product";
 const MainProducts = () => {
+  const dispatch =useDispatch();
+  const {courses,loading,error}=useSelector(state=>state.courseList);
+
+  useEffect(() => {
+    dispatch(courseListAction())
+  }, [dispatch])
+  
+
   return (
     <section className="content-main">
       <div className="content-header">
@@ -42,8 +54,8 @@ const MainProducts = () => {
         </header>
 
         <div className="card-body">
-          {/* {errorDelete && (
-            <Message variant="alert-danger">{errorDelete}</Message>
+          {error && (
+            <Message variant="alert-danger">{error}</Message>
           )}
           {loading ? (
             <Loading />
@@ -51,11 +63,11 @@ const MainProducts = () => {
             <Message variant="alert-danger">{error}</Message>
           ) : (
             <div className="row">
-              {products.map((product) => (
-                <Product product={product} key={product._id} />
+              {courses.map((product) => (
+                <Product product={product} key={product.id} />
               ))}
             </div>
-          )} */}
+          )}
 
           <nav className="float-end mt-4" aria-label="Page navigation">
             <ul className="pagination">
