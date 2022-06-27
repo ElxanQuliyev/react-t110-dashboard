@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { courseEditAction } from "../../Redux/Actions/CourseActions";
+import { courseEditAction, courseUpdateAction } from "../../Redux/Actions/CourseActions";
 import { listInstructors } from "../../Redux/Actions/InstructorActions";
 import { listCategories } from "../../Redux/Actions/CategoryActions";
+import { COURSE_UPDATE_RESET } from "../../Redux/Constants/CourseConstants";
 
 const ToastObjects = {
   pauseOnFocusLoss: false,
@@ -31,34 +32,54 @@ const EditProductMain = (props) => {
   const [photoUrl, setPhotoUrl] = useState("")
   const [instructorId, setInstructorId] = useState(null)
   const [categoryId, setCategoryId] = useState(null)
-
-  console.log(courseName)
   const courseEditInfo=useSelector(state=>state.courseEdit);
   const {course,loading,error}=courseEditInfo;
-
+  const {success:courseUpdate,loading:loadingUpdate,error:errorUpdate}=useSelector(state=>state.courseUpdate);
   useEffect(()=>{
-    if(!course.courseName || course.courseId!==Number(productId)){
-      dispatch(courseEditAction(productId))
-      dispatch(listCategories())
-      dispatch(listInstructors())
+    if(courseUpdate){
+      dispatch({ type: COURSE_UPDATE_RESET });
+      toast.success("Course Updated",ToastObjects);
     }else{
-        setCourseName(course.courseName)
-        setDescription(course.description)
-        setSummary(course.summary)
-        setDiscount(course.discount)
-        setPrice(course.price)
-        setIsFeatured(course.isFeatured)
-        setTrailer(course.trailer)
-        setPhotoUrl(course.photoUrl)
-        setInstructorId(course.insctructorId)
-        setCategoryId(course.categoryId)
+      if(!course.courseName || course.courseId!==Number(productId)){
+        dispatch(courseEditAction(Number(productId)))
+        dispatch(listCategories())
+        dispatch(listInstructors())
+      }else{
+          setCourseName(course.courseName)
+          setDescription(course.description)
+          setSummary(course.summary)
+          setDiscount(course.discount)
+          setPrice(course.price)
+          setIsFeatured(course.isFeatured)
+          setTrailer(course.trailerUrl)
+          setPhotoUrl(course.photoUrl)
+          setInstructorId(course.instructorId)
+          setCategoryId(course.categoryId)
+      }
     }
-  },[productId,dispatch,course])
+  },[productId,dispatch,course,courseUpdate])
+  console.log(course)
+  const submitHandler=(e)=>{
+    e.preventDefault();
+    dispatch(courseUpdateAction({
+      id:productId,
+      name:courseName,
+      summary,
+      description,
+      price,
+      discount,
+      photoUrl,
+      isFeatured,
+      trailerUrl:trailer,
+      categoryId,
+      instructorId,
+    }))
+  }
   return (
     <>
       <Toast />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
-        <form>
+        <form onSubmit={submitHandler}>
           <div className="content-header">
             <Link to="/products" className="btn btn-danger text-white">
               Go to products
@@ -75,7 +96,7 @@ const EditProductMain = (props) => {
             <div className="col-xl-8 col-lg-8">
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
-                  {/* {errorUpdate && (
+                  {errorUpdate && (
                     <Message variant="alert-danger">{errorUpdate}</Message>
                   )}
                   {loadingUpdate && <Loading />}
@@ -83,7 +104,7 @@ const EditProductMain = (props) => {
                     <Loading />
                   ) : error ? (
                     <Message variant="alert-danger">{error}</Message>
-                  ) : ( */}
+                  ) : (
                 <>
                 <div className="mb-4">
                     <label htmlFor="product_title" className="form-label">
@@ -99,14 +120,14 @@ const EditProductMain = (props) => {
                       onChange={e=>setCourseName(e.target.value)}
                     />
                   </div>
-                  {instructors && instructors.length>0 && (
+                  {instructors && (
                     <div className="mb-4">
                     <label htmlFor="product_instructors" className="form-label">
                       Instructors
                     </label>
                     <select id="product_instructors" 
                        onChange={e=>setInstructorId(e.target.value)}
-                       className="form-control" defaultValue={course.insctructorId}>
+                       className="form-control" defaultValue={course.instructorId}>
                       <option disabled value="-">select Instructors...</option>
                       {instructors?.map(instructor=>(
                         <option key={instructor.id} 
@@ -115,21 +136,24 @@ const EditProductMain = (props) => {
                     </select>
                   </div>
                   )}
-                  
-                  <div className="mb-4">
+                  {categories && (
+                    <div className="mb-4">
                     <label htmlFor="product_categories" className="form-label">
                       Categories
                     </label>
                     <select id="product_categories" 
-                       onChange={e=>setCategoryId(e.target.value)}
-                       className="form-control" defaultValue={course.categoryId}>
-                     <option option disabled value="-">select categories...</option>
+                        onChange={e=>setCategoryId(e.target.value)}
+                        className="form-control" defaultValue={course.categoryId}>
+                      <option option disabled value="-">select categories...</option>
                       {categories?.map(category=>(
                         <option key={category.categoryId} 
                           value={category.categoryId}>{category.categoryName}</option>
                       ))}
                     </select>
                   </div>
+
+                  )}
+               
                   <div className="mb-4">
                     <label htmlFor="product_trailer" className="form-label">
                       Trailer Url
@@ -139,7 +163,6 @@ const EditProductMain = (props) => {
                       placeholder="Type here"
                       className="form-control"
                       id="product_trailer"
-                      required
                       value={trailer}
                       onChange={e=>setTrailer(e.target.value)}
                     />
@@ -193,6 +216,7 @@ const EditProductMain = (props) => {
                       type="checkbox"
                       id="product_price"
                       value={isFeatured}
+                      checked={isFeatured?"checked":""}
                       onChange={(e)=>
                         {setIsFeatured(e.target.checked ? true : false)}}
                     />
@@ -219,6 +243,7 @@ const EditProductMain = (props) => {
                     <input className="form-control mt-3" type="file" />
                   </div>
                 </>
+                  )}
                 </div>
               </div>
             </div>
