@@ -9,9 +9,13 @@ const MainProducts = () => {
   const dispatch =useDispatch();
   const {courses,loading,error}=useSelector(state=>state.courseList);
 
+  const courseDelete=useSelector(state=>state.courseDeleted);
+  const { error: errorDelete, course: successDelete } = courseDelete;
+
+
   useEffect(() => {
     dispatch(courseListAction())
-  }, [dispatch])
+  }, [dispatch,successDelete])
   
 
   return (

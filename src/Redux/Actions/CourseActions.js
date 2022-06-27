@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../../api/BaseConfig";
-import { COURSE_ADD_FAIL, COURSE_ADD_REQUEST, COURSE_ADD_SUCCESS, COURSE_LIST_FAIL, COURSE_LIST_REQUEST, COURSE_LIST_SUCCESS } from "../Constants/CourseConstants"
+import { COURSE_ADD_FAIL, COURSE_ADD_REQUEST, COURSE_ADD_SUCCESS, COURSE_DELETE_FAIL, COURSE_DELETE_REQUEST, COURSE_DELETE_SUCCESS, COURSE_EDIT_FAIL, COURSE_EDIT_REQUEST, COURSE_EDIT_SUCCESS, COURSE_LIST_FAIL, COURSE_LIST_REQUEST, COURSE_LIST_SUCCESS } from "../Constants/CourseConstants"
 
 export const courseAdd=(courseData)=>async(dispatch)=>{
     try {
@@ -27,8 +27,30 @@ export const courseListAction=()=>async(dispatch)=>{
     }
 }
 
-export const courseDelete=()=>()=>{
-    
+export const courseEditAction=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:COURSE_EDIT_REQUEST});
+        const {data} = await axios.get(`${BASE_URL}/course/${id}`)
+        dispatch({type:COURSE_EDIT_SUCCESS,payload:data});
+    } catch (error) {
+        dispatch({type:COURSE_EDIT_FAIL,payload:error});
+    }
+}
+
+export const courseDelete=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:COURSE_DELETE_REQUEST})
+        const {data} = await axios.delete(`${BASE_URL}/course/${id}`)
+        dispatch({
+            type:COURSE_DELETE_SUCCESS,
+            payload:data
+        })
+    } catch (error) {
+        dispatch({
+            type:COURSE_DELETE_FAIL,
+            payload:error
+        })
+    }
 }
 
 

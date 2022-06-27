@@ -3,7 +3,7 @@ import { LoginReducers, RegisterReducers } from './Reducers/UserReducers';
 import thunk from 'redux-thunk';
 import { categoryListReducers } from './Reducers/CategoryReducers';
 import { instructorListReducers } from './Reducers/InstructorReducers';
-import { courseListReducers, courseReducers } from './Reducers/CourseReducers';
+import { courseDeleteReducers, courseEditReducers, courseListReducers, courseReducers } from './Reducers/CourseReducers';
 
 
 const userFromLocalStorage=localStorage.getItem("userInfo")?
@@ -15,7 +15,9 @@ const reducer=combineReducers({
     categoryList:categoryListReducers,
     instructorList:instructorListReducers,
     addedCourseRed:courseReducers,
-    courseList:courseListReducers
+    courseList:courseListReducers,
+    courseDeleted:courseDeleteReducers,
+    courseEdit:courseEditReducers,
 })
 
 const initialState={

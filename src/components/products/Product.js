@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import  { useSelector,useDispatch } from "react-redux";
+import { courseDelete } from "../../Redux/Actions/CourseActions";
 
 const Product = (props) => {
   const { product } = props;
-  const deletehandler=()=>{
-
+  const dispatch = useDispatch()
+  const deleteHandler=(id)=>{
+    let result = window.confirm("Are you sure?")
+    if(result){
+     dispatch(courseDelete(id))
+    }
   }
   return (
     <>
@@ -20,14 +26,14 @@ const Product = (props) => {
             <div className="price mb-2">${product.price}</div>
             <div className="row">
               <Link
-                to={`/product/${product.id}/edit`}
+                to={`/product/${product.courseId}/edit`}
                 className="btn btn-sm btn-outline-success p-2 pb-3 col-md-6"
               >
                 <i className="fas fa-pen"></i>
               </Link>
               <Link
                 to="#"
-                onClick={() => deletehandler(product.id)}
+                onClick={() => deleteHandler(product.courseId)}
                 className="btn btn-sm btn-outline-danger p-2 pb-3 col-md-6"
               >
                 <i className="fas fa-trash-alt"></i>
