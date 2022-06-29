@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateCategory from "./CreateCategory";
 import CategoriesTable from "./CategoriesTable";
+import { listCategories } from "../../Redux/Actions/CategoryActions";
+import {useDispatch, useSelector} from 'react-redux';
 
 const MainCategories = () => {
+  const dispatch=useDispatch();
+  const {categories}=useSelector(state=>state.categoryList);
+  useEffect(()=>{
+    dispatch(listCategories())
+  },[dispatch])
   return (
     <section className="content-main">
       <div className="content-header">
@@ -15,7 +22,7 @@ const MainCategories = () => {
             {/* Create category */}
             <CreateCategory />
             {/* Categories table */}
-            <CategoriesTable />
+            <CategoriesTable categories={categories} />
           </div>
         </div>
       </div>

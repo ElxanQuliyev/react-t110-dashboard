@@ -1,7 +1,7 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import { LoginReducers, RegisterReducers } from './Reducers/UserReducers';
 import thunk from 'redux-thunk';
-import { categoryListReducers } from './Reducers/CategoryReducers';
+import { categoryDeleteReducers, categoryEditReducers, categoryListReducers, categoryUpdateReducer } from './Reducers/CategoryReducers';
 import { instructorListReducers } from './Reducers/InstructorReducers';
 import { courseDeleteReducers, courseEditReducers, courseListReducers, courseReducers, courseUpdateReducer } from './Reducers/CourseReducers';
 
@@ -12,13 +12,16 @@ const userFromLocalStorage=localStorage.getItem("userInfo")?
 const reducer=combineReducers({
     loginUser:LoginReducers,
     registerUser:RegisterReducers,
-    categoryList:categoryListReducers,
     instructorList:instructorListReducers,
     addedCourseRed:courseReducers,
     courseList:courseListReducers,
     courseDeleted:courseDeleteReducers,
     courseEdit:courseEditReducers,
-    courseUpdate:courseUpdateReducer
+    courseUpdate:courseUpdateReducer,
+    categoryList:categoryListReducers,
+    categoryDeleted:categoryDeleteReducers,
+    categoryEdit:categoryEditReducers,
+    categoryUpdate:categoryUpdateReducer
 })
 
 const initialState={
