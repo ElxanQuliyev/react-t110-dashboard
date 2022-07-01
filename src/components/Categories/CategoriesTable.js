@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CategoriesTable = ({categories}) => {
-  console.log(categories)
   return (
     <div className="col-md-12 col-lg-8">
       <table className="table">

@@ -38,10 +38,10 @@ export const categoryAdd=(categoryData)=>async(dispatch)=>{
         dispatch({type:CATEGORY_ADD_REQUEST});
         const config={
             headers:{
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json",
             }
         }
-        const {data} = await axios.post(`${BASE_URL}/category/add`,categoryData,config)
+        const {data} = await axios.post(`${BASE_URL}/category/add`,JSON.stringify(categoryData),config)
         dispatch({type:CATEGORY_ADD_SUCCESS,payload:data});
     } catch (error) {
         dispatch({type:CATEGORY_ADD_FAIL,payload:error});
