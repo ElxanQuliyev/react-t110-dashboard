@@ -33,7 +33,7 @@ export const categoryUpdateAction=(categoryData)=>async(dispatch)=>{
     }
 }
 
-export const categoryAdd=(categoryData)=>async(dispatch)=>{
+export const categoryAdd=(categoryData)=>async(dispatch,getState)=>{
     try {
         dispatch({type:CATEGORY_ADD_REQUEST});
         const config={

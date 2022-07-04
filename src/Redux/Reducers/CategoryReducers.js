@@ -1,10 +1,12 @@
-import { CATEGORY_ADD_FAIL, CATEGORY_ADD_REQUEST, CATEGORY_ADD_SUCCESS, CATEGORY_DELETE_FAIL, CATEGORY_DELETE_REQUEST, CATEGORY_DELETE_SUCCESS, CATEGORY_EDIT_FAIL, CATEGORY_EDIT_REQUEST, CATEGORY_EDIT_SUCCESS, CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, CATEGORY_UPDATE_FAIL, CATEGORY_UPDATE_REQUEST, CATEGORY_UPDATE_SUCCESS } from "../Constants/CategoryConstants";
-export const categoryAddReducers=(state={categoryInfo:{}},action)=>{
+import { CATEGORY_ADD_FAIL, CATEGORY_ADD_REQUEST, CATEGORY_ADD_RESET, CATEGORY_ADD_SUCCESS, CATEGORY_DELETE_FAIL, CATEGORY_DELETE_REQUEST, CATEGORY_DELETE_SUCCESS, CATEGORY_EDIT_FAIL, CATEGORY_EDIT_REQUEST, CATEGORY_EDIT_SUCCESS, CATEGORY_LIST_FAIL, CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, CATEGORY_UPDATE_FAIL, CATEGORY_UPDATE_REQUEST, CATEGORY_UPDATE_SUCCESS } from "../Constants/CategoryConstants";
+export const categoryAddReducers=(state={category:{}},action)=>{
     switch (action.type) {
         case CATEGORY_ADD_REQUEST:
             return {loading:true}
         case CATEGORY_ADD_SUCCESS:
-            return {loading:false,categoryInfo:action.payload}
+            return {loading:false,createSuccess:true,category:action.payload}
+           case CATEGORY_ADD_RESET:
+            return {};
             case CATEGORY_ADD_FAIL:
                 return {loading:false,error:action.payload}
 

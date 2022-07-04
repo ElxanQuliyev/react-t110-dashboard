@@ -7,9 +7,16 @@ import {useDispatch, useSelector} from 'react-redux';
 const MainCategories = () => {
   const dispatch=useDispatch();
   const {categories}=useSelector(state=>state.categoryList);
+  const {createSuccess}=useSelector(state=>state.categoryAdd);
   useEffect(()=>{
     dispatch(listCategories())
   },[dispatch])
+
+  useEffect(()=>{
+    if(createSuccess){
+      dispatch(listCategories())
+    }
+  },[dispatch,createSuccess])
   return (
     <section className="content-main">
       <div className="content-header">

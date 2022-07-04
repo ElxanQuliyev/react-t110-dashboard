@@ -21,7 +21,7 @@ const CategoriesTable = ({categories}) => {
         {/* Table Data */}
         <tbody>
           {categories?.map((category,i)=>(
-            <tr>
+            <tr key={category.categoryId}>
             <td>
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" />
@@ -44,7 +44,7 @@ const CategoriesTable = ({categories}) => {
                   <i className="fas fa-ellipsis-h"></i>
                 </Link>
                 <div className="dropdown-menu">
-                  <Link className="dropdown-item" to="#">
+                  <Link className="dropdown-item" to={`/category/${category.categoryId}`}>
                     Edit info
                   </Link>
                   <Link className="dropdown-item text-danger" to="#">

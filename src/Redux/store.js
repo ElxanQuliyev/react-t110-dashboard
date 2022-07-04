@@ -1,7 +1,7 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import { LoginReducers, RegisterReducers } from './Reducers/UserReducers';
 import thunk from 'redux-thunk';
-import { categoryDeleteReducers, categoryEditReducers, categoryListReducers, categoryUpdateReducer } from './Reducers/CategoryReducers';
+import { categoryAddReducers, categoryDeleteReducers, categoryEditReducers, categoryListReducers, categoryUpdateReducer } from './Reducers/CategoryReducers';
 import { instructorListReducers } from './Reducers/InstructorReducers';
 import { courseDeleteReducers, courseEditReducers, courseListReducers, courseReducers, courseUpdateReducer } from './Reducers/CourseReducers';
 
@@ -21,7 +21,8 @@ const reducer=combineReducers({
     categoryList:categoryListReducers,
     categoryDeleted:categoryDeleteReducers,
     categoryEdit:categoryEditReducers,
-    categoryUpdate:categoryUpdateReducer
+    categoryUpdate:categoryUpdateReducer,
+    categoryAdd:categoryAddReducers
 })
 
 const initialState={
